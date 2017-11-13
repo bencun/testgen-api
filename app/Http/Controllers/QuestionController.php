@@ -3,8 +3,61 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
+use App\Question;
 
 class QuestionController extends Controller
 {
-    //
+    public function index(Category $category){
+        return $category->questions;
+    }
+
+    public function show(Question $question){
+        return $question;
+    }
+
+    public function store(){
+        try{
+            $input = request()->input();
+            $newQuestion = new Question($input);
+            $newQuestion->save();
+            return response($newQuestion, 201);
+        }
+        catch(\Exception $e){
+            return response()->json($e, 400);
+        }
+    }
+    public function update(){
+        try{
+            $input = request()->input();
+            $existingQuestion = Question::find($input["id"]);
+            if($existingQuestion){
+                $existingQuestion->update($input);
+                $existingQuestion->save();
+            }
+            else
+                throw new \Exception();
+            return response($existingQuestion, 202);
+
+        }
+        catch(\Exception $e){
+            return response()->json($e, 404);
+        }        
+    }
+    public function delete(){
+        try{
+            $input = request()->input();
+            $existingQuestion = Question::find($input["id"]);
+            if($existingQuestion){
+                $existingQuestion->delete();
+            }
+            else
+                throw new \Exception();
+            return response($existingQuestion, 202);
+
+        }
+        catch(\Exception $e){
+            return response()->json($e, 404);
+        }
+    }
 }

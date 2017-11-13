@@ -7,6 +7,8 @@ use App\Category;
 
 class Question extends Model
 {
+    protected $guarded = ['created_at', 'updated_at'];
+
     protected $casts = [
         'options' => 'array'
     ];
