@@ -28,3 +28,9 @@ Route::get('/questions/{question}', "QuestionController@show");
 Route::post('/questions', "QuestionController@store");
 Route::put('/questions', "QuestionController@update");
 Route::delete('/questions', "QuestionController@delete");
+
+Route::get('/templates', "TestTemplateController@index");
+Route::get('/templates/{template}', "TestTemplateController@show");
+Route::post('/templates', "TestTemplateController@store");
+Route::put('/templates', "TestTemplateController@update");
+Route::delete('/templates', "TestTemplateController@delete");
