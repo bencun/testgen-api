@@ -19,6 +19,7 @@ class CreateQuestionsTable extends Migration
 
             $table->integer('category_id');
             $table->integer('difficulty');
+            $table->text('question');
             $table->text('note');
             $table->boolean('multiselect');
             $table->json('options');
