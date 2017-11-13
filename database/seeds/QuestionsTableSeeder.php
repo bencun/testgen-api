@@ -40,12 +40,12 @@ class QuestionsTableSeeder extends Seeder
         
 
 
-        for ($i=1; $i < 15; $i++) {
+        for ($i=1; $i < 49; $i++) {
             Question::create([
                 'category_id' => ($i % 3) + 1,
                 'difficulty' => ($i % 10) + 1,
                 'question' => "Dummy question " . $i,
-                'note' => "Dummy question note " . $i,
+                'note' => "Dummy question note, category " . (($i % 3) + 1) . " and difficulty " . (($i % 10) + 1),
                 'multiselect' => false,
                 'options' => [
                     [
