@@ -34,3 +34,9 @@ Route::get('/templates/{template}', "TestTemplateController@show");
 Route::post('/templates', "TestTemplateController@store");
 Route::put('/templates', "TestTemplateController@update");
 Route::delete('/templates', "TestTemplateController@delete");
+
+Route::get('/users', "UsersController@index");
+Route::get('/users/{user}', "UsersController@show");
+Route::post('/users', "UsersController@store");
+Route::put('/users', "UsersController@update");
+Route::delete('/users', "UsersController@delete");
