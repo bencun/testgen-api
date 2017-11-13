@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class TestTemplate extends Model
 {
     protected $casts = [
-        'options' => 'array'
+        'categories' => 'array'
     ];
 }

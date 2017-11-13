@@ -9,6 +9,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $casts = [
+        'tests' => 'array'
+    ];
     /**
      * The attributes that are mass assignable.
      *
