@@ -32,10 +32,12 @@ class CreateTestsTable extends Migration
             each option has a "correct" attribute which determines if the option is a part of a valid answer
             "selected" means that the user has selected that option
             {
+                id: int,
                 question: stc,
                 note: note,
                 category: str
                 difficulty: int,
+                multiselect: bool,
                 options:[
                     option: str,
                     correct: bool,
