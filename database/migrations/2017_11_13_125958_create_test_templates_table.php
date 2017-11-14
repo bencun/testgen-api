@@ -24,6 +24,16 @@ class CreateTestTemplatesTable extends Migration
             $table->integer('timedTotalTime');
             $table->boolean('timedPerQuestion');
             $table->integer('timedPerQuestionTime');
+
+            /*
+             categories: [
+                {
+                    id: int category id,
+                    count: int how many questions from the category,
+                    maxDiff: minimum difficulty level,
+                    minDiff: maximum difficulty level
+                }
+            */
             $table->json('categories');
         });
     }
