@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = ['remember_token'];
+    protected $guarded = ['remember_token', 'passwordConfirmation', 'id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -25,6 +25,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'passwordConfirmation', 'password'
     ];
 }
