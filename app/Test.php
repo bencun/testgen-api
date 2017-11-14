@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Test extends Model
 {
@@ -11,4 +12,23 @@ class Test extends Model
     protected $casts = [
         'questions' => 'array'
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function getTimedAttribute($timed)
+    {
+        return (bool) $timed;
+    }
+
+    public function getTimedTotalAttribute($timedTotal)
+    {
+        return (bool) $timedTotal;
+    }
+    
+    public function getTimedPerQuestionAttribute($timedPerQuestion)
+    {
+        return (bool) $timedPerQuestion;
+    }
 }

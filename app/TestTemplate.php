@@ -11,4 +11,19 @@ class TestTemplate extends Model
     protected $casts = [
         'categories' => 'array'
     ];
+
+    public function getTimedAttribute($timed)
+    {
+        return (bool) $timed;
+    }
+
+    public function getTimedTotalAttribute($timedTotal)
+    {
+        return (bool) $timedTotal;
+    }
+    
+    public function getTimedPerQuestionAttribute($timedPerQuestion)
+    {
+        return (bool) $timedPerQuestion;
+    }
 }
