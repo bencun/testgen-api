@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             
             $table->string('name')->unique();
             $table->string('password');
-            $table->text('details');
+            $table->text('details')->nullable();
             $table->boolean('admin');
 
             $table->json('tests')->nullable();
