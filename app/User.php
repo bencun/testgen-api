@@ -5,8 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Test;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -36,5 +37,17 @@ class User extends Authenticatable
     public function getAdminAttribute($admin)
     {
         return (bool) $admin;
+    }
+
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(){
+        return ['user' => [
+            'id' => $this->id,
+            'name' => $this->name,
+            'admin' => $this->admin
+        ]];
     }
 }

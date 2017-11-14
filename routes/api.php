@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
+Route::get('/flogin', "AuthController@flogin");
+Route::post('/tlogin', "AuthController@tlogin");
 
 Route::post('/login', "AuthController@login");
 Route::post('/logout', "AuthController@logout");
