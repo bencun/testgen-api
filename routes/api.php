@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/login', "AuthController@login");
 Route::post('/logout', "AuthController@logout");
 
-Route::middleware(['jwt.auth', 'jwt.refresh'])
+Route::middleware(['APIAuthMW'])
     ->group(function(){
         Route::get('/categories', "CategoryController@index");
         Route::get('/categories/{category}', "CategoryController@show");
