@@ -41,11 +41,16 @@ Route::post('/users', "UsersController@store");
 Route::put('/users', "UsersController@update");
 Route::delete('/users', "UsersController@delete");
 
+//get all the graded tests for the current user
+Route::get('/test/{user}', "TestController@index");
+//get a specific graded test (for listing of the results)
+Route::get('/test/{user}/{test}', "TestController@read");
 //generate the entire test to work on based on test template id
 Route::get('/test/generate/{user}/{template}', "TestController@generate");
-//this POST updates the complete test (for timed tests)
+//this POST updates the complete test (for timed tests and the test finale)
 Route::post('/test', "TestController@store");
 //this updates a single question (for timed questions)
 Route::put('/test/question', "TestController@update");
 //this deletes the test from the DB
-Route::delete('/test', "TestController@delete");
+//Route::delete('/test', "TestController@delete");
+//TODO
