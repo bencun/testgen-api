@@ -24,7 +24,11 @@ class AuthController extends Controller
                 $pwVerified = password_verify($password, $user->password);
                 if($pwVerified){
                     $token = JWTAuth::fromUser($user);
-                    return response()->json($token);
+                    $responseArray = [
+                        "token" => $token,
+                        "admin" => $user->admin
+                    ];
+                    return response()->json($responseArray, 200);
                 }
                 else throw new CustomException("Bad name/password combo.");
 
@@ -42,6 +46,20 @@ class AuthController extends Controller
             $user = JWTAuth::parseToken()->authenticate();
             JWTAuth::parseToken()->invalidate();
             return response("OK", 200);
+        }
+        catch(\Exception $e){
+            return response("You are not logged in.", 401);
+        }
+    }
+
+    public function verify(){
+        $input = request()->input();
+        try{
+            $user = JWTAuth::parseToken()->authenticate();
+            $responseArray = [
+                "admin" => $user->admin
+            ];
+            return response()->json($responseArray, 200);
         }
         catch(\Exception $e){
             return response("You are not logged in.", 401);
