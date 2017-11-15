@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
             'details' => "This is a regular user.",
             'admin' => false,
             'tests' => [
-                'id' => 1
+                ['id' => 1]
             ]
         ]);
     }
