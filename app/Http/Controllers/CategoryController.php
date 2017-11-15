@@ -13,7 +13,7 @@ class CategoryController extends Controller
 {
     public function index(){
         $allCategories = Category::get();
-        return [$allCategories];
+        return $allCategories;
     }
     public function show(Category $category){
         return $category;
