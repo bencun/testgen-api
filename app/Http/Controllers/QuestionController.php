@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Question;
+use JWTAuth;
+use \Tymon\JWTAuth\Exceptions\JWTException;
+use App\Exceptions\CustomException;
 
 class QuestionController extends Controller
 {
@@ -36,9 +39,12 @@ class QuestionController extends Controller
                 $existingQuestion->save();
             }
             else
-                throw new \Exception();
+                throw new CustomException("Question does not exist.");
             return response($existingQuestion, 202);
 
+        }
+        catch(CustomException $e){
+            return response()->json($e, 404);
         }
         catch(\Exception $e){
             return response()->json($e, 404);
@@ -52,9 +58,12 @@ class QuestionController extends Controller
                 $existingQuestion->delete();
             }
             else
-                throw new \Exception();
+                throw new CustomException("Question does not exist.");
             return response($existingQuestion, 202);
 
+        }
+        catch(CustomException $e){
+            return response()->json($e, 404);
         }
         catch(\Exception $e){
             return response()->json($e, 404);

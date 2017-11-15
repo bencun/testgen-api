@@ -6,6 +6,8 @@ use Validator;
 use Illuminate\Http\Request;
 use App\User;
 use App\Exceptions\CustomException;
+use JWTAuth;
+use \Tymon\JWTAuth\Exceptions\JWTException;
 
 class UsersController extends Controller
 {

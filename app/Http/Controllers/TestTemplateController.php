@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TestTemplate;
+use JWTAuth;
+use \Tymon\JWTAuth\Exceptions\JWTException;
+use App\Exceptions\CustomException;
 
 class TestTemplateController extends Controller
 {
@@ -37,9 +40,12 @@ class TestTemplateController extends Controller
                 $existingTestTemplate->save();
             }
             else
-                throw new \Exception();
+                throw new CustomException("Template does not exist.");
             return response($existingTestTemplate, 202);
 
+        }
+        catch(CustomException $e){
+            return response()->json($e, 404);
         }
         catch(\Exception $e){
             return response()->json($e, 404);
@@ -53,9 +59,12 @@ class TestTemplateController extends Controller
                 $existingTestTemplate->delete();
             }
             else
-                throw new \Exception();
+                throw new CustomException("Template does not exist.");
             return response($existingTestTemplate, 202);
 
+        }
+        catch(CustomException $e){
+            return response()->json($e, 404);
         }
         catch(\Exception $e){
             return response()->json($e, 404);

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 
+use JWTAuth;
+use \Tymon\JWTAuth\Exceptions\JWTException;
+use App\Exceptions\CustomException;
+
 class CategoryController extends Controller
 {
     public function index(){
@@ -37,9 +41,12 @@ class CategoryController extends Controller
                 $existingCategory->save();
             }
             else
-                throw new \Exception();
+                throw new CustomException("Category does not exist.");
             return response($existingCategory, 202);
 
+        }
+        catch(CustomException $e){
+            return response()->json($e, 404);
         }
         catch(\Exception $e){
             return response()->json($e, 404);
@@ -53,9 +60,12 @@ class CategoryController extends Controller
                 $existingCategory->delete();
             }
             else
-                throw new \Exception();
+                throw new CustomException("Category does not exist.");
             return response($existingCategory, 202);
 
+        }
+        catch(CustomException $e){
+            return response()->json($e, 404);
         }
         catch(\Exception $e){
             return response()->json($e, 404);
