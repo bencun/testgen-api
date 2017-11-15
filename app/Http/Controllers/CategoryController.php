@@ -50,23 +50,17 @@ class CategoryController extends Controller
             return response()->json($e, 404);
         }        
     }
-    public function delete(){
+    public function delete(Category $category){
         try{
-            $input = request()->input();
-            $existingCategory = Category::find($input["id"]);
-            if($existingCategory){
-                $existingCategory->delete();
-            }
-            else
-                throw new CustomException("Category does not exist.");
-            return response($existingCategory, 202);
+            $category->delete();
+            return response($category, 202);
 
         }
         catch(CustomException $e){
             return response()->json($e, 404);
         }
         catch(\Exception $e){
-            return response()->json($e, 404);
+            return response()->json($e, 400);
         }
     }
 }

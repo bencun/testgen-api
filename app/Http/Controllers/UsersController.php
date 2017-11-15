@@ -94,20 +94,14 @@ class UsersController extends Controller
             return response()->json($e, 400);
         }//catch        
     }
-    public function delete(){
+    public function delete(User $user){
         try{
-            $input = request()->input();
-            $existingUser = User::find($input["id"]);
-            if($existingUser){
-                $existingUser->delete();
-            }
-            else
-                throw new CustomException();
-            return response($existingUser, 202);
+            $user->delete();
+            return response($user, 202);
 
         }
-        catch(CustomException $e){
-            return response()->json($e, 404);
+        catch(\Exception $e){
+            return response()->json($e, 400);
         }
     }
 }

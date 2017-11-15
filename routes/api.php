@@ -34,7 +34,7 @@ Route::middleware(['APIAuthMW:admin'])
         //update
         Route::put('/categories', "CategoryController@update");
         //delete
-        Route::delete('/categories', "CategoryController@delete");
+        Route::delete('/categories/{category}', "CategoryController@delete");
         
         //read all questions from a category
         Route::get('/questions/all/{category}', "QuestionController@index");
@@ -45,7 +45,7 @@ Route::middleware(['APIAuthMW:admin'])
         //update
         Route::put('/questions', "QuestionController@update");
         //delete
-        Route::delete('/questions', "QuestionController@delete");
+        Route::delete('/questions/{question}', "QuestionController@delete");
         
         //read all test templates
         Route::get('/templates', "TestTemplateController@index");
@@ -56,7 +56,7 @@ Route::middleware(['APIAuthMW:admin'])
         //update
         Route::put('/templates', "TestTemplateController@update");
         //delete
-        Route::delete('/templates', "TestTemplateController@delete");
+        Route::delete('/templates/{template}', "TestTemplateController@delete");
         
         //read all users
         Route::get('/users', "UsersController@index");
@@ -67,7 +67,7 @@ Route::middleware(['APIAuthMW:admin'])
         //update
         Route::put('/users', "UsersController@update");
         //delete
-        Route::delete('/users', "UsersController@delete");
+        Route::delete('/users/{user}', "UsersController@delete");
     });
 
     Route::middleware(['APIAuthMW:user'])

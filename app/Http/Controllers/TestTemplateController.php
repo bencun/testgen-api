@@ -51,23 +51,17 @@ class TestTemplateController extends Controller
             return response()->json($e, 404);
         }        
     }
-    public function delete(){
+    public function delete(TestTemplate $template){
         try{
-            $input = request()->input();
-            $existingTestTemplate = TestTemplate::find($input["id"]);
-            if($existingTestTemplate){
-                $existingTestTemplate->delete();
-            }
-            else
-                throw new CustomException("Template does not exist.");
-            return response($existingTestTemplate, 202);
+            $template->delete();
+            return response($template, 202);
 
         }
         catch(CustomException $e){
             return response()->json($e, 404);
         }
         catch(\Exception $e){
-            return response()->json($e, 404);
+            return response()->json($e, 400);
         }
     }
 }

@@ -50,23 +50,17 @@ class QuestionController extends Controller
             return response()->json($e, 404);
         }        
     }
-    public function delete(){
+    public function delete(Question $question){
         try{
-            $input = request()->input();
-            $existingQuestion = Question::find($input["id"]);
-            if($existingQuestion){
-                $existingQuestion->delete();
-            }
-            else
-                throw new CustomException("Question does not exist.");
-            return response($existingQuestion, 202);
+            $question->delete();
+            return response($question, 202);
 
         }
         catch(CustomException $e){
             return response()->json($e, 404);
         }
         catch(\Exception $e){
-            return response()->json($e, 404);
+            return response()->json($e, 400);
         }
     }
 }
