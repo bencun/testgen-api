@@ -9,9 +9,12 @@ use App\Category;
 use App\Question;
 use App\TestTemplate;
 use App\Test;
+use JWTAuth;
+use \Tymon\JWTAuth\Exceptions\JWTException;
 
 class TestController extends Controller
 {
+    //helper function that tests a single question
     private function gradeQuestion($questionAsArray){
         //get the options
         $questionAsArrayOptions = &$questionAsArray["options"]; //reference!
@@ -36,25 +39,46 @@ class TestController extends Controller
         return $questionAsArray;
     }
 
-    public function index(User $user){
-        return $user->allTests;
+    public function index(){
+        try{
+            $user = JWTAuth::parseToken()->authenticate();
+            return $user->allTests;
+        }
+        catch(CustomException $e){
+            return response()->json($e, 400);
+        }
+        catch(JWTException $e){
+            return response()->json($e, 401);
+        }
     }
 
-    public function read(User $user, Test $test){
-        if($test->user->id == $user->id)
-            return $test;
-        else{
-            return response()->json("", 403);
+    public function read(Test $test){
+        try{
+            $user = JWTAuth::parseToken()->authenticate();
+            if($test->user->id == $user->id)
+                return $test;
+            else{
+                throw new CustomException("Forbidden.");
+            }
+        }
+        catch(CustomException $e){
+            return response()->json($e, 403);
+        }
+        catch(JWTException $e){
+            return response()->json($e, 400);
         }
     }
 
 
-    public function generate(User $user, TestTemplate $template){
-        //check if the user can even do this test
+    public function generate(TestTemplate $template){
         try{
+            //check if the user can use this template
+            $user = JWTAuth::parseToken()->authenticate();
             $found = false;
-            foreach($user->tests as $userTest){
-                if($userTest === $template->id) $found = true;
+            foreach($user->tests as $userTestTemplate){
+                if($userTestTemplate['id'] == $template->id){
+                    $found = true;
+                }
             };
             if(!$found) throw new CustomException("Not a valid template value!");
             //create a new test model
@@ -115,6 +139,9 @@ class TestController extends Controller
         catch(CustomException $e){
             return response()->json($e, 400);
         }
+        catch(JWTException $e){
+            return response()->json($e, 401);
+        }
     }//generate()
 
     public function store(){
@@ -122,9 +149,12 @@ class TestController extends Controller
         
         try{
             if(isset($input["id"]) && isset($input["questions"])){
+                //does this test belong to this user?
+                $user = JWTAuth::parseToken()->authenticate();
                 //get the test
                 $testId = $input["id"];
                 $realTest = Test::find($testId);
+                if(!$realTest) throw new CustomException("Not a valid template value!");
                 //get the questions from the real test
                 $realTestQuestions = $realTest->questions;
                 //extract the questions and answers from the input
@@ -153,12 +183,23 @@ class TestController extends Controller
         catch(CustomException $e){
             return response()->json($e, 400);
         }
+        catch(JWTException $e){
+            return response()->json($e, 401);
+        }
     }//store()
 
     public function update(){
         $input = request()->input();
 
         try{
+            //does this test belong to this user?
+            $user = JWTAuth::parseToken()->authenticate();
+            $found = false;
+            foreach($user->allTests as $userTest){
+                if($userTest->id === $input["id"]) $found = true;
+            };
+            if(!$found) throw new CustomException("Not a valid template value!");
+
             if(isset($input["id"]) && isset($input["questions"])){
                 $testId = $input["id"];
                 $questionAsArray = $input["questions"][0];
@@ -178,7 +219,7 @@ class TestController extends Controller
                 $realTest->questions = $realTestQuestions;
                 //dd($realTest);
                 $realTest->save();
-                return response()->json("", 200);
+                return response()->json($realTest, 200);
             }
             else{
                 throw new CustomException("Invalid request.");
@@ -186,6 +227,9 @@ class TestController extends Controller
         }
         catch(CustomException $e){
             return response()->json($e, 400);
+        }
+        catch(JWTException $e){
+            return response()->json($e, 401);
         }
 
     }//update()
