@@ -13,9 +13,7 @@ class CategoryController extends Controller
 {
     public function index(){
         $allCategories = Category::get();
-        $count = Category::count();
-
-        return ["data" => $allCategories, "count" => $count];
+        return [$allCategories];
     }
     public function show(Category $category){
         return $category;
