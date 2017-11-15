@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use JWTAuth;
 use \Tymon\JWTAuth\Exceptions\JWTException;
+use App\Exceptions\CustomException;
 
 class APIAuthMiddleware
 {
@@ -15,14 +16,22 @@ class APIAuthMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $role)
     {
         try {
-            $jwt = JWTAuth::parseToken()->authenticate();
-        } catch (JWTException $e) {
-            $jwt = false;
+            $user = JWTAuth::parseToken()->authenticate();
+            if($role=='admin' && !$user->admin) throw new CustomException("Inadequate privileges: not admin.");
+            if($role=='user' && $user->admin) throw new CustomException("Inadequate privileges: not user.");
         }
-        if ($jwt) {
+        catch (JWTException $e){
+            $user = false;
+        }
+        catch(CustomException $e){
+            $user = false;
+            return response()->json($e, 401);
+        }
+
+        if ($user) {
             return $next($request);
         } else {
             return response('Unauthorized.', 401);

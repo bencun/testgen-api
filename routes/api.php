@@ -24,7 +24,7 @@ Route::post('/tlogin', "AuthController@tlogin");
 Route::post('/login', "AuthController@login");
 Route::post('/logout', "AuthController@logout");
 
-Route::middleware(['APIAuthMW'])
+Route::middleware(['APIAuthMW:admin'])
     ->group(function(){
         Route::get('/categories', "CategoryController@index");
         Route::get('/categories/{category}', "CategoryController@show");
@@ -49,7 +49,10 @@ Route::middleware(['APIAuthMW'])
         Route::post('/users', "UsersController@store");
         Route::put('/users', "UsersController@update");
         Route::delete('/users', "UsersController@delete");
-        
+    });
+
+    Route::middleware(['APIAuthMW:user'])
+    ->group(function(){
         //get all the graded tests for the current user
         Route::get('/test/{user}', "TestController@index");
         //get a specific graded test (for listing of the results)
