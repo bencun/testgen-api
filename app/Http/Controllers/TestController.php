@@ -44,11 +44,31 @@ class TestController extends Controller
             $user = JWTAuth::parseToken()->authenticate();
             $found = [];
             foreach($user->tests as $userTestTemplate){
-                if($userTestTemplate['id'] == $template->id){
+                $template = TestTemplate::find($userTestTemplate['id']);
+                if($template)
                     $found[] = $template;
-                }
             };
             return $found;
+        }
+        catch(CustomException $e){
+            return response()->json($e, 400);
+        }
+        catch(JWTException $e){
+            return response()->json($e, 401);
+        }
+    }
+    public function template(TestTemplate $template){
+        try{
+            $user = JWTAuth::parseToken()->authenticate();
+            $found = false;
+            foreach($user->tests as $userTestTemplate){
+                if($userTestTemplate['id'] == $template->id){
+                    $found = true;
+                }
+            };
+            if(!$found) throw new CustomException("Template not found!");
+            
+            return $template;
         }
         catch(CustomException $e){
             return response()->json($e, 400);

@@ -72,6 +72,10 @@ Route::middleware(['APIAuthMW:admin'])
 
     Route::middleware(['APIAuthMW:user'])
     ->group(function(){
+        //get all the assigned test templates
+        Route::get('/alltemplates', "TestController@all");
+        //get all the assigned test templates
+        Route::get('/alltemplates/{template}', "TestController@template");
         //get all the graded tests for the current user
         Route::get('/test', "TestController@index");
         //get a specific graded test (for listing of the results)
