@@ -39,6 +39,25 @@ class TestController extends Controller
         return $questionAsArray;
     }
 
+    public function all(){
+        try{
+            $user = JWTAuth::parseToken()->authenticate();
+            $found = [];
+            foreach($user->tests as $userTestTemplate){
+                if($userTestTemplate['id'] == $template->id){
+                    $found[] = $template;
+                }
+            };
+            return $found;
+        }
+        catch(CustomException $e){
+            return response()->json($e, 400);
+        }
+        catch(JWTException $e){
+            return response()->json($e, 401);
+        }
+    }
+
     public function index(){
         try{
             $user = JWTAuth::parseToken()->authenticate();
