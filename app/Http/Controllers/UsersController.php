@@ -13,9 +13,8 @@ class UsersController extends Controller
 {
     public function index(){
         $allUsers = User::get();
-        $count = User::count();
 
-        return ["data" => $allUsers, "count" => $count];
+        return $allUsers;
     }
     public function show(User $user){
         return $user;
