@@ -12,7 +12,8 @@ use \Tymon\JWTAuth\Exceptions\JWTException;
 class UsersController extends Controller
 {
     public function index(){
-        $allUsers = User::get();
+        $currentUser = JWTAuth::parseToken()->authenticate();
+        $allUsers = User::where('name', '!=', $currentUser->name)->get();
 
         return $allUsers;
     }
