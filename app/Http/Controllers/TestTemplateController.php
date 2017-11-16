@@ -12,9 +12,8 @@ class TestTemplateController extends Controller
 {
     public function index(){
         $allTT = TestTemplate::get();
-        $count = TestTemplate::count();
 
-        return ["data" => $allTT, "count" => $count];
+        return $allTT;
     }
     public function show(TestTemplate $template){
         return $template;
