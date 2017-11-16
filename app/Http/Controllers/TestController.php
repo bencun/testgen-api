@@ -114,9 +114,11 @@ class TestController extends Controller
             //check if the user can use this template
             $user = JWTAuth::parseToken()->authenticate();
             $found = false;
-            foreach($user->tests as $userTestTemplate){
+            $foundIdx = -1;
+            foreach($user->tests as $idx=>$userTestTemplate){
                 if($userTestTemplate['id'] == $template->id){
                     $found = true;
+                    $foundIdx = $idx;
                 }
             };
             if(!$found) throw new CustomException("Not a valid template value!");
@@ -170,10 +172,14 @@ class TestController extends Controller
 
             $newTest->questions = $questionsArray;
             $newTest->save();
-            return response()->json($newTest, 200);
             //remove the reference to the template from the user's assigned tests
             //...so that the user is unable to complete this test again
-            //TODO
+            $tempTests = $user->tests;
+            array_splice($tempTests, $foundIdx, 1);
+            $user->tests = $tempTests;
+            $user->save();
+            //return the test
+            return response()->json($newTest, 200);
         }//try
         catch(CustomException $e){
             return response()->json($e, 400);
