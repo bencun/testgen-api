@@ -52,6 +52,7 @@ class CategoryController extends Controller
     }
     public function delete(Category $category){
         try{
+            $category->questions()->delete();
             $category->delete();
             return response($category, 202);
 
