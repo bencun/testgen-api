@@ -26,19 +26,7 @@ class TestTemplatesTableSeeder extends Seeder
                     'minDiff' => 2,
                     'maxDiff' => 7,
                     'count' => 3
-                ],
-                [
-                    'id' => 2,
-                    'minDiff' => 4,
-                    'maxDiff' => 6,
-                    'count' => 2
-                ],
-                [
-                    'id' => 3,
-                    'minDiff' => 1,
-                    'maxDiff' => 4,
-                    'count' => 3
-                ],
+                ]
             ]
         ]);
     }
