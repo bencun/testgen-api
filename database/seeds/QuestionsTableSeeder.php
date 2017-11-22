@@ -79,8 +79,8 @@ class QuestionsTableSeeder extends Seeder
             'category_id' => 1,
             'difficulty' => 2,
             'question' => "What is JSON?",
-            'note' => "There are multiple correct answers.",
-            'multiselect' => true,
+            'note' => "",
+            'multiselect' => false,
             'options' => [
                 [
                     "option" => "A programming language.",
