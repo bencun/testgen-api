@@ -26,7 +26,7 @@ class UsersController extends Controller
             if(isset($input['password']) && isset($input['passwordConfirmation'])){
                 if($input['password'] === $input['passwordConfirmation']){
                     $validator = Validator::make($input, [
-                        'name' => 'required|alpha_num|min:3|max:25|string',
+                        'name' => 'required|regex:/^[0-9A-Za-z.]+$/|min:3|max:25|string',
                         'details' => 'nullable|string',
                         'password' => "required|min:5|string",
                         'passwordConfirmation' => "required|min:5|string",
@@ -76,7 +76,7 @@ class UsersController extends Controller
             }
             //validate data
             $validator = Validator::make($input, [
-                'name' => 'required|alpha_num|min:3|max:25|string',
+                'name' => 'required|regex:/^[0-9A-Za-z.]+$/|min:3|max:25|string',
                 'details' => 'nullable|string',
                 'admin' => "required|boolean",
                 'tests' => "nullable"
