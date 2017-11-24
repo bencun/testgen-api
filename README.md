@@ -1,4 +1,4 @@
-# TestGen (backed)
+# TestGen (backend)
 An Laravel backend of an application used to generate quizzes.
 
 ## Important note
@@ -27,7 +27,7 @@ composer install
 #### MySQL DB
 
 If you don't have an existing MySQL database that you're going to use you'll need to create a new one and it's recommended to do so.
-Also it's recommended to create a user that has of the privileges assigned on the database you'll be using.
+Also it's recommended to create a user that has all the privileges assigned to it on the database you'll be using.
 
 #### Application settings
 
