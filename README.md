@@ -1,5 +1,5 @@
 # TestGen (backend)
-An Laravel backend of an application used to generate quizzes.
+A Laravel backend of an application used to generate quizzes.
 
 ## Important note
 
