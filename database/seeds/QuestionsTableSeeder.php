@@ -178,5 +178,29 @@ class QuestionsTableSeeder extends Seeder
                 ]
               ]
         ])->save();
+
+        for ($i=1; $i < 35 ; $i++) { 
+            Question::create([
+                'category_id' => 3,
+                'difficulty' => 3,
+                'question' => "Dummy question #".$i,
+                'note' => "Dummy note #".$i,
+                'multiselect' => false,
+                'options' => [
+                    [
+                        "option" => "Dummy option #1.",
+                        "correct" => false
+                    ],
+                    [
+                        "option" => "Dummy option #2.",
+                        "correct" => false
+                    ],
+                    [
+                        "option" => "Dummy option #3.",
+                        "correct" => false
+                    ]
+                  ]
+            ])->save();
+        }
     }
 }
